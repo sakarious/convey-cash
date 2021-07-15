@@ -11,4 +11,9 @@ use App\Models\User;
 class ConveyCashApiTest extends TestCase
 {
 
+    use RefreshDatabase;
+
+
+
+
 }
