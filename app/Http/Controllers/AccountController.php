@@ -175,5 +175,57 @@ class AccountController extends Controller
         return response()->json($result, 200);
     }
 
-    
+    //Search and list transfer history
+    public function history(Request $request){
+
+        //Get user id
+        $user = $request->user()->id;
+
+        //Can search transfer history by account number. Check if accountNumber is present in query parameter
+        if($request->query('accountNumber')){
+            
+            //Assign name from query parameter to variable
+            $accountNumber = $request->query('accountNumber');
+
+            //Search for user transaction in database  where account number is the number given
+            $fields = ['user_id' => $user, 'account_number' => $accountNumber];
+            $history = Accounts::where($fields)->get()->makehidden(['id', 'user_id', 'bank_code', 'bank_name', 'currency', 'updated_at']);
+
+            //if no history was not found and send appropriate json response
+            if ($history == '[]'){
+                $jsonRes = array(
+                    "status" => "success",
+                    "message" => "No history found"
+                );
+                return response()->json($jsonRes, 200);
+            }
+
+            //if history was found, send json response
+            $jsonRes = array(
+                "status" => "success",
+                "data" => $history
+            );
+            return response()->json($jsonRes, 200);
+        }
+
+        //List all user transfer history
+        $transfers = Accounts::where("user_id", $user)->get()->makehidden(['id', 'user_id', 'bank_code', 'bank_name', 'currency', 'updated_at']);
+
+        //if no history present, send appropriate json response
+        if ($transfers == '[]'){
+            $jsonRes = array(
+                "status" => "success",
+                "message" => "You haven't made a transaction yet."
+            );
+            return response()->json($jsonRes, 200);
+        }
+
+        //if transfer history found, send json response
+        $jsonRes = array(
+            "status" => "success",
+            "data" => $transfers
+        );
+    return response()->json($jsonRes, 200);
+
+    }
 }
