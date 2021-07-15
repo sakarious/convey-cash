@@ -106,6 +106,28 @@ class ConveyCashApiTest extends TestCase
             ]);
     }
 
+    /**
+     * User cannot login if login details are invalid.
+     *
+     * 
+     */
+    public function test_will_login_user()
+    {
+        $newUser = [
+            'email' => 'sakarious@yahoo.com',
+            'password' => 'secret',
+        ];
+        
+        $this->withoutExceptionHandling();
+        
+        $response = $this->json('POST', '/api/v1/login', $newUser, ['Accept' => 'application/json']);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            "status"
+            ]);
+    }
+
 
 
 
