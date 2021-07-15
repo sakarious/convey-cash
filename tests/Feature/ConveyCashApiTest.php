@@ -300,6 +300,36 @@ class ConveyCashApiTest extends TestCase
     }
 
 
+    /**
+     * User cannot make a transfer without authentication.
+     *
+     * 
+     */
+    public function test_will_not_make_transfers_if_authentication_fails()
+    {
+        $user = User::create([
+            'name' => 'Oluwashegs',
+            'email' => 'o@gmail.com',
+            'password' => '12345'
+        ]);
+
+
+        $header = [];
+        $header['Accept'] = 'application/json';
+
+        $account = [
+            'account_number' => '2111333996',
+            'bank_code' => '057',
+            'amount' => '50000000',
+            'reason' => 'Laulau'
+        ];
+        
+        $response = $this->json('POST', '/api/v1/transfer', $account, $header);
+
+        $response->assertStatus(401);
+    }
+
+
 
 
 
