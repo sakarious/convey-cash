@@ -42,6 +42,29 @@ class ConveyCashApiTest extends TestCase
             ]);
     }
 
+    /**
+     * User can register.
+     *
+     * 
+     */
+    public function test_will_register_user()
+    {
+        $newUser = [
+            'name' => 'Sakarious',
+            'email' => 'sakarious@yahoo.com',
+            'password' => 'secret',
+            'password_confirmation' => 'secret'
+        ];
+        
+        $response = $this->json('POST', '/api/v1/register', $newUser, ['Accept' => 'application/json']);
+
+        $response->assertStatus(201);
+        $response->assertJsonStructure([
+            "message",
+            "data"
+            ]);
+    }
+
 
 
 
