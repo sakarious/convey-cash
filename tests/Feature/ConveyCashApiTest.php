@@ -259,6 +259,47 @@ class ConveyCashApiTest extends TestCase
     }
 
 
+    /**
+     * User can verify account details
+     *
+     * 
+     */
+    public function test_will_verify_recipient_account_details()
+    {
+        $user = User::create([
+            'name' => 'Oluwashegs',
+            'email' => 'o@gmail.com',
+            'password' => '12345'
+        ]);
+
+        $token = $user->createToken('TestToken')->accessToken;
+
+        $header = [];
+        $header['Accept'] = 'application/json';
+        $header['Authorization'] = 'Bearer '.$token;
+
+        $bankCode = '057';
+
+        $account = [
+            'account_number' => '2111333996',
+            'bank_code' => $bankCode,
+        ];
+        
+        $response = $this->json('POST', '/api/v1/verify', $account, $header);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            "status",
+            "message",
+            "data" => [
+                "account_number",
+                "account_name",
+                "bank_id"
+            ]
+            ]);
+    }
+
+
 
 
 
