@@ -534,4 +534,48 @@ class ConveyCashApiTest extends TestCase
             ]);
     }
 
+    /**
+     * User can list transaction history
+     *
+     * 
+     */
+    public function test_will_list_transaction_history()
+    {
+        $user = User::create([
+            'name' => 'Oluwashegs',
+            'email' => 'o@gmail.com',
+            'password' => '12345'
+        ]);
+
+        $token = $user->createToken('TestToken')->accessToken;
+
+        $header = [];
+        $header['Accept'] = 'application/json';
+        $header['Authorization'] = 'Bearer '.$token;
+
+        //Create Dummy transaction history
+        $history = Accounts::create([
+            'user_id' => 1,
+            'account_name' => 'Sakarious Da Genius',
+            'account_number' => '1020304050',
+            'bank_code' => '000',
+            'bank_name' => 'Bank Sakarious',
+            'currency' => 'NGN',
+            'amount' => '3000000000000000',
+            'reason' => 'Transport Fare',
+            'status' => 'Successful'
+        ]);
+        
+        $response = $this->json('GET', '/api/v1/history', [], $header);
+
+         $response->assertStatus(200);
+         $response->assertJsonStructure([
+                    "status",
+                    "data"
+                ]);
+    }
+
+
+    
+
 }
