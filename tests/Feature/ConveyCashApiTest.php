@@ -364,6 +364,43 @@ class ConveyCashApiTest extends TestCase
     }
 
 
+        /**
+     * User cannot make transfer if account number is invalid
+     *
+     * 
+     */
+    public function test_will_not_make_transfer_if_account_number_is_invalid()
+    {
+        $user = User::create([
+            'name' => 'Oluwashegs',
+            'email' => 'o@gmail.com',
+            'password' => '12345'
+        ]);
+
+        $token = $user->createToken('TestToken')->accessToken;
+
+        $header = [];
+        $header['Accept'] = 'application/json';
+        $header['Authorization'] = 'Bearer '.$token;
+
+
+        $account = [
+            'account_number' => '21113339967',
+            'bank_code' => '057',
+            'amount' => '50000000',
+            'reason' => 'Laulau'
+        ];
+        
+        $response = $this->json('POST', '/api/v1/transfer', $account, $header);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            "status" => false,
+            "message" => "Could not resolve account name. Check parameters or try again."
+            ]);
+    }
+
+
 
 
 
