@@ -20,6 +20,28 @@ class ConveyCashApiTest extends TestCase
         $this->artisan('passport:install');
     }
 
+     /**
+     * User Cannot register if validation fails.
+     *
+     * 
+     */
+    public function test_will_not_register_user_if_validation_fails()
+    {
+        $newUser = [
+            'name' => 'Sakarious',
+            'email' => 'sakarious@yahoo.com',
+            'password' => 'secret'
+        ];
+        
+        $response = $this->json('POST', '/api/v1/register', $newUser, ['Accept' => 'application/json']);
+
+        $response->assertStatus(400);
+        $response->assertJsonStructure([
+            "message",
+            "errors"
+            ]);
+    }
+
 
 
 
