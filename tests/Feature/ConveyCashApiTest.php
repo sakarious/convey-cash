@@ -156,6 +156,40 @@ class ConveyCashApiTest extends TestCase
     }
 
 
+    /**
+     * User cannot verify account details if validation fails
+     *
+     * 
+     */
+    public function test_will_not_verify_recipient_account_details_if_validation_fails()
+    {
+        $user = User::create([
+            'name' => 'Oluwashegs',
+            'email' => 'o@gmail.com',
+            'password' => '12345'
+        ]);
+
+        $token = $user->createToken('TestToken')->accessToken;
+
+        $header = [];
+        $header['Accept'] = 'application/json';
+        $header['Authorization'] = 'Bearer '.$token;
+
+        $account = [
+            'account_numbers' => '2111333996',
+            'bank_code' => '057',
+        ];
+        
+        $response = $this->json('POST', '/api/v1/verify', $account, $header);
+
+        $response->assertStatus(400);
+        $response->assertJsonStructure([
+            "message",
+            "errors"
+            ]);
+    }
+
+
 
 
 
