@@ -190,6 +190,39 @@ class ConveyCashApiTest extends TestCase
     }
 
 
+    /**
+     * User cannot verify recipient account details if an invalid account number is given
+     *
+     * 
+     */
+    public function test_will_not_verify_recipient_account_details_if_account_number_is_invalid()
+    {
+        $user = User::create([
+            'name' => 'Oluwashegs',
+            'email' => 'o@gmail.com',
+            'password' => '12345'
+        ]);
+
+        $token = $user->createToken('TestToken')->accessToken;
+
+        $header = [];
+        $header['Accept'] = 'application/json';
+        $header['Authorization'] = 'Bearer '.$token;
+
+        $account = [
+            'account_number' => '211133345789',
+            'bank_code' => '057',
+        ];
+        
+        $response = $this->json('POST', '/api/v1/verify', $account, $header);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            "status" => false,
+            "message" => "Could not resolve account name. Check parameters or try again."
+            ]);
+    }
+
 
 
 
