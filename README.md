@@ -28,7 +28,7 @@
 
 ## Base URL
 
-`http://127.0.0.1:8000/api/v1`
+`https://api.pachrisajilo.com/api/v1`
 
 ## Endpoints
 
@@ -49,12 +49,12 @@ Returns json data of user details and access token.
 
 
 -   **URL and Method**
-    `POST http://127.0.0.1:8000/api/v1/register`
+    `POST https://api.pachrisajilo.com/api/v1/register`
 
 -   **Request**
 
 ```
-POST http://127.0.0.1:8000/api/v1/register
+POST https://api.pachrisajilo.com/api/v1/register
 Content-Type: application/json
 
 {
@@ -123,12 +123,12 @@ Returns json data of user details and access token.
 
 
 -   **URL and Method**
-    `POST http://127.0.0.1:8000/api/v1/login`
+    `POST https://api.pachrisajilo.com/api/v1/login`
 
 -   **Request**
 
 ```
-POST http://127.0.0.1:8000/api/v1/login
+POST https://api.pachrisajilo.com/api/v1/login
 Content-Type: application/json
 
 {
@@ -193,7 +193,7 @@ Returns json data of information of valid account number and back code to the ap
 
 
 -   **URL and Method**
-    `POST http://127.0.0.1:8000/api/v1/verify`
+    `POST https://api.pachrisajilo.com/api/v1/verify`
 
 - **Bank 3-digit Code**
 1. Access Bank - 044 
@@ -227,7 +227,7 @@ Returns json data of information of valid account number and back code to the ap
 -   **Request**
 
 ```
-POST http://127.0.0.1:8000/api/v1/login
+POST https://api.pachrisajilo.com/api/v1/verify
 Content-Type: application/json
 Authorization: Bearer ACCESS_TOKEN
 
@@ -312,7 +312,7 @@ Content-Type: application/json; charset=utf-8
 Returns json data of information of transaction response.
 
 -   **URL and Method**
-    `POST http://127.0.0.1:8000/api/v1/transfer`
+    `POST https://api.pachrisajilo.com/api/v1/transfer`
 
 - **Bank 3-digit Code**
 1. Access Bank - 044 
@@ -346,7 +346,7 @@ Returns json data of information of transaction response.
 -   **Request**
 
 ```
-POST http://127.0.0.1:8000/api/v1/login
+POST https://api.pachrisajilo.com/api/v1/transfer
 Content-Type: application/json
 Authorization: Bearer ACCESS_TOKEN
 
@@ -415,7 +415,7 @@ Content-Type: application/json; charset=utf-8
 Returns json data of transaction history to the application.
 
 -   **URL and Method**
-    `GET http://127.0.0.1:8000/api/v1/history?accountNumber=2111333996`
+    `GET https://api.pachrisajilo.com/api/v1/history?accountNumber=2111333996`
 
 -   **Query Params**
     `?accountNumber=2111333996`
@@ -488,7 +488,7 @@ Status 200 OK
 Returns json data of all transaction history to the application.
 
 -   **URL and Method**
-    `GET http://127.0.0.1:8000/api/v1/history`
+    `GET https://api.pachrisajilo.com/api/v1/history`
 
     **Required:**
 
