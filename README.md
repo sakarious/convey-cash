@@ -5,6 +5,11 @@
 
 ---
 
+# Description
+
+[Convey Cash](https://github.com/sakarious/convey-cash) allows authorized consumers make money transfers using Paystack as well as being able to list & search their transfer history.
+
+---
 
 # API Specification
 
