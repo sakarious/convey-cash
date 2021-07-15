@@ -128,6 +128,34 @@ class ConveyCashApiTest extends TestCase
             ]);
     }
 
+    /**
+     * User cannot verify recipient account details without authentication.
+     *
+     * 
+     */
+    public function test_will_not_verify_recipient_details_if_authentication_fails()
+    {
+        $user = User::create([
+            'name' => 'Oluwashegs',
+            'email' => 'o@gmail.com',
+            'password' => '12345'
+        ]);
+
+
+        $header = [];
+        $header['Accept'] = 'application/json';
+
+        $account = [
+            'account_numbers' => 'sakarious@yahoo.com',
+            'bank_code' => 'secret',
+        ];
+        
+        $response = $this->json('POST', '/api/v1/verify', $account, $header);
+
+        $response->assertStatus(401);
+    }
+
+
 
 
 
