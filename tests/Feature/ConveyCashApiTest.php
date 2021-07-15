@@ -65,6 +65,26 @@ class ConveyCashApiTest extends TestCase
             ]);
     }
 
+    /**
+     * User cannot login if validation fails.
+     *
+     * 
+     */
+    public function test_will_not_login_user_if_validation_fails()
+    {
+        $newUser = [
+            'email' => 'sakarious@yahoo.com'
+        ];
+        
+        $response = $this->json('POST', '/api/v1/login', $newUser, ['Accept' => 'application/json']);
+
+        $response->assertStatus(400);
+        $response->assertJsonStructure([
+            "message",
+            "errors"
+            ]);
+    }
+
 
 
 
