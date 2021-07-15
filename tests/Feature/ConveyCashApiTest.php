@@ -330,6 +330,40 @@ class ConveyCashApiTest extends TestCase
     }
 
 
+    /**
+     * User cannot make transfers if validation fails
+     *
+     * 
+     */
+    public function test_will_not_make_transfer_if_validation_fails()
+    {
+        $user = User::create([
+            'name' => 'Oluwashegs',
+            'email' => 'o@gmail.com',
+            'password' => '12345'
+        ]);
+
+        $token = $user->createToken('TestToken')->accessToken;
+
+        $header = [];
+        $header['Accept'] = 'application/json';
+        $header['Authorization'] = 'Bearer '.$token;
+
+        $account = [
+            'account_number' => '2111333996',
+            'bank_code' => '057',
+        ];
+        
+        $response = $this->json('POST', '/api/v1/transfer', $account, $header);
+
+        $response->assertStatus(400);
+        $response->assertJsonStructure([
+            "message",
+            "errors"
+            ]);
+    }
+
+
 
 
 
