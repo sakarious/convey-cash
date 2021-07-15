@@ -13,6 +13,13 @@ class ConveyCashApiTest extends TestCase
 
     use RefreshDatabase;
 
+    //Get passport to work
+    public function setUp(): void 
+    {
+        parent::setUp();
+        $this->artisan('passport:install');
+    }
+
 
 
 
