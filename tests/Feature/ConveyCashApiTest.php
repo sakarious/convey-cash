@@ -468,6 +468,35 @@ class ConveyCashApiTest extends TestCase
     }
 
 
+    /**
+     * User can search transaction history
+     *
+     * 
+     */
+    public function test_will_search_empty_transaction_history()
+    {
+        $user = User::create([
+            'name' => 'Oluwashegs',
+            'email' => 'o@gmail.com',
+            'password' => '12345'
+        ]);
+
+        $token = $user->createToken('TestToken')->accessToken;
+
+        $header = [];
+        $header['Accept'] = 'application/json';
+        $header['Authorization'] = 'Bearer '.$token;
+        
+        $response = $this->json('GET', '/api/v1/history?accountNumber=2111333996', [], $header);
+
+         $response->assertStatus(200);
+        $response->assertJson([
+            "status" => "success",
+            "message" => "No history found"
+            ]);
+    }
+
+
 
 
 
